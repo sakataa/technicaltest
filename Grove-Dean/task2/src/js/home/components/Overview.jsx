@@ -1,50 +1,40 @@
 import React from 'react';
-import { Jumbotron, Alert, Form, FormGroup, Label, Col, Input } from 'reactstrap';
+import PropTypes from 'prop-types';
+import { Jumbotron, Alert } from 'reactstrap';
+import { formatNumber } from '../../utils/fomatter';
+import TimeSelection from './TimeSelection';
 
 const Overview = (props) => {
     const { overviewData, selectedTime, onChangeTimer } = props;
-
-    const handleChangeTimer = (event) => {
-        const changedTime = Number(event.target.value);
-        if(changedTime !== selectedTime){
-            onChangeTimer && onChangeTimer(changedTime);
-        }
-    }
 
     if (!overviewData) {
         return null;
     }
 
     return (
-        <div>
+        <div className="my-3">
             <Jumbotron fluid className="text-center py-3">
                 <h5 className="">COVID-19 CORONAVIRUS OUTBREAK</h5>
-                <Form tag="div" className="justify-content-center my-3">
-                    <FormGroup row className="mb-2 mr-sm-2 mb-sm-0">
-                        <Label for="timeDropdown" sm={2}>Refresh After(s):</Label>
-                        <Col sm={1}>
-                            <Input type="select" name="timeDropdown" id="timeDropdown" value={selectedTime} onChange={handleChangeTimer}>
-                                <option>10</option>
-                                <option>20</option>
-                                <option>30</option>
-                                <option>40</option>
-                                <option>50</option>
-                            </Input>
-                        </Col>
-                    </FormGroup>
-                </Form>
+                <TimeSelection selectedTime={selectedTime} onChangeTimer={onChangeTimer} />
+
                 <Alert color="primary">
-                    Coronavirus Cases: {overviewData.cases}
+                    Coronavirus Cases: {formatNumber(overviewData.cases)}
                 </Alert>
                 <Alert color="success">
-                    Recovered: {overviewData.recovered}
+                    Recovered: {formatNumber(overviewData.recovered)}
                 </Alert>
                 <Alert color="danger">
-                    Deaths: {overviewData.deaths}
+                    Deaths: {formatNumber(overviewData.deaths)}
                 </Alert>
             </Jumbotron>
         </div>
     );
 };
+
+Overview.propTypes = {
+    overviewData: PropTypes.object.isRequired,
+    selectedTime: PropTypes.number.isRequired,
+    onChangeTimer: PropTypes.func
+}
 
 export default Overview;

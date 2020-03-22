@@ -6,9 +6,9 @@ import axios from 'axios';
 
 const API_DATA_OVERVIEW_URL = 'https://corona.lmao.ninja/all';
 const API_DATA_BYCOUNTRY_URL = 'https://corona.lmao.ninja/countries';
-const DEFAULT_TIMER = 10;
+const DEFAULT_TIMER = 20;
 
-const App = () => {
+const AppContainer = () => {
     const [overviewData, setOverviewData] = useState(null);
     const [dataByCountry, setDataByCountry] = useState([]);
     const [filteredText, setFilteredText] = useState('');
@@ -34,13 +34,8 @@ const App = () => {
         
         getData();
         const timeInMillisecond = refreshTime * 1000;
-        console.log(refreshTime);
         timeoutId.current = window.setTimeout(refresh, timeInMillisecond);
     }
-
-    useEffect(() => {
-        getData();
-    }, [])
 
     useEffect(() => {
         refresh();
@@ -71,4 +66,4 @@ const App = () => {
     );
 }
 
-export default App;
+export default AppContainer;
