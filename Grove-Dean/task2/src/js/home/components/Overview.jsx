@@ -32,7 +32,7 @@ const Overview = (props) => {
 };
 
 Overview.propTypes = {
-    overviewData: PropTypes.object.isRequired,
+    overviewData: PropTypes.object,
     selectedTime: PropTypes.number.isRequired,
     onChangeTimer: PropTypes.func
 }
