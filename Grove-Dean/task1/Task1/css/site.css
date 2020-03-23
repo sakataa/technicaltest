@@ -16,3 +16,33 @@
     margin-left: -15px;
     margin-right: -15px;
 }
+
+.content-bottom-group > li{
+    border: none;
+}
+
+header .breadcrumb-item+.breadcrumb-item::before {
+    content: ">";
+}
+
+.text-underline{
+    text-decoration: underline;
+}
+
+ion-icon {
+    font-size: 24px;
+  }
+
+@media (min-width: 768px){
+    .content-bottom-group .border-md-left{
+        border-left: 1px solid #dee2e6!important;
+    }
+
+    header .form-container {
+        width: auto !important;
+    }
+
+    header .form-container .form-control {
+        width: auto !important;
+    }
+}
