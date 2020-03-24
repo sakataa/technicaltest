@@ -1,4 +1,8 @@
-export const formatNumber = (num, digits = 3) => {
+export const formatNumber = (num = 0, digits = 3) => {
+    if(Number(num) === NaN){
+        return 0;
+    }
+    
     const pattern = new RegExp(`(\\d)(?=(\\d{${digits}})+(?!\\d))`, 'g');
-    return num.toString().replace(pattern, '$1,')
+    return Number(num).toString().replace(pattern, '$1,')
 }

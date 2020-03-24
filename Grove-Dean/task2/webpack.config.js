@@ -17,7 +17,8 @@ module.exports = env => {
     mode: isPro ? 'production' : 'development',
     devtool: isPro ? '' : 'source-maps',
     entry: {
-      'app': './src/js/index.jsx'
+      'app': './src/js/index.jsx',
+      'resourcesLanguage': './src/js/resources/index.js'
     },
     output: {
       path: path.resolve(__dirname, 'dist'),
@@ -55,6 +56,11 @@ module.exports = env => {
             filename: 'vendors.bundle.js',
             priority: -10
           },
+          // resourceLanguage: {
+          //   test: /[\\/]js[\\/]resources[\\/]/,
+          //   filename: 'resourceLanguage.bundle.js',
+          //   priority: -10
+          // },
           default: {
             minChunks: 2,
             priority: -20,
