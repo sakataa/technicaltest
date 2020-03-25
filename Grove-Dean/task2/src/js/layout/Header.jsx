@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Nav, Navbar, NavbarBrand, NavItem, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { getText } from '../resources/resourceManager';
-import { language, defaultLanguage, flagBylanguage } from '../utils/constants';
+import { language, flagBylanguage } from '../utils/constants';
 import { LanguageContext } from '../utils/context';
 
 const Header = (props) => {

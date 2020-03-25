@@ -4,6 +4,9 @@ const {
   CleanWebpackPlugin
 } = require("clean-webpack-plugin");
 
+const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+
 const cleanOptions = {
   verbose: true,
   dry: false,
@@ -17,13 +20,14 @@ module.exports = env => {
     mode: isPro ? 'production' : 'development',
     devtool: isPro ? '' : 'source-maps',
     entry: {
+      'resourcesLanguage': './src/js/resources/index.js',
       'app': './src/js/index.jsx',
-      'resourcesLanguage': './src/js/resources/index.js'
     },
     output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: '[name].bundle.js',
-      publicPath: "/dist/"
+      filename: '[name].[chunkhash].bundle.js',
+      publicPath: "",
+      chunkFilename: '[name].[chunkhash].bundle.js'
     },
     module: {
       rules: [{
@@ -39,28 +43,44 @@ module.exports = env => {
       new webpack.DefinePlugin({
         "process.env.NODE_ENV": isPro ? '"production"' : '"development"'
       }),
-    ].concat(isPro ? [new CleanWebpackPlugin(cleanOptions)] : []),
+      new BundleAnalyzerPlugin({openAnalyzer: false}),
+      new HtmlWebpackPlugin(
+        Object.assign(
+          {},
+          {
+            inject: true,
+            template: './index.html',
+            filename: 'index.html'
+          },
+          isPro
+            ? {
+                minify: {
+                  removeComments: true,
+                  collapseWhitespace: true,
+                  removeRedundantAttributes: true,
+                  useShortDoctype: true,
+                  removeEmptyAttributes: true,
+                  removeStyleLinkTypeAttributes: true,
+                  keepClosingSlash: true,
+                  minifyJS: true,
+                  minifyCSS: true,
+                  minifyURLs: true,
+                },
+              }
+            : undefined
+        )
+      ),
+    ].concat(isPro ? [new CleanWebpackPlugin(cleanOptions)] : [new CleanWebpackPlugin(cleanOptions)]),
     optimization: {
       splitChunks: {
         chunks: 'all',
-        minSize: 30000,
-        maxSize: 0,
-        minChunks: 1,
-        maxAsyncRequests: 6,
-        maxInitialRequests: 4,
-        automaticNameDelimiter: '~',
-        automaticNameMaxLength: 30,
         cacheGroups: {
           vendors: {
             test: /[\\/]node_modules[\\/]/,
-            filename: 'vendors.bundle.js',
-            priority: -10
+            name: 'vendors',
+            priority: 1,
+            filename: '[name].bundle.js'
           },
-          // resourceLanguage: {
-          //   test: /[\\/]js[\\/]resources[\\/]/,
-          //   filename: 'resourceLanguage.bundle.js',
-          //   priority: -10
-          // },
           default: {
             minChunks: 2,
             priority: -20,
@@ -70,7 +90,7 @@ module.exports = env => {
       }
     },
     devServer: isPro ? undefined : {
-      contentBase: './'
+      contentBase: './dist'
     }
   }
 };
