@@ -32,8 +32,8 @@ const AppContainer = () => {
 
         const apiByCountry = API_DATA_BYCOUNTRY_URL + '/' + defaultImportantItem.country;
         axios.get(apiByCountry).then(response => {
-            const { cases, totalCases, deaths, todayDeaths, recovered } = response.data;
-            setImportantItem(Object.assign({}, importantItem, { cases, totalCases, deaths, todayDeaths, recovered }));
+            const { cases, todayCases, deaths, todayDeaths, recovered } = response.data;
+            setImportantItem(Object.assign({}, importantItem, { cases, todayCases, deaths, todayDeaths, recovered }));
         })
 
         axios.get(API_DATA_BYCOUNTRY_URL)
