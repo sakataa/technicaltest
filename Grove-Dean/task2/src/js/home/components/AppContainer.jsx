@@ -6,6 +6,15 @@ import axios from 'axios';
 
 const API_DATA_OVERVIEW_URL = 'https://corona.lmao.ninja/all';
 const API_DATA_BYCOUNTRY_URL = 'https://corona.lmao.ninja/countries';
+const defaultImportantItem = {
+    country: 'Vietnam',
+    countryInfo: {iso2: 'VN', flag: 'https://raw.githubusercontent.com/NovelCOVID/API/master/assets/flags/vn.png'},
+    cases: 0,
+    todayCases: 0,
+    deaths: 0,
+    todayDeaths: 0,
+    recovered: 0
+}
 const DEFAULT_TIMER = 20;
 
 const AppContainer = () => {
@@ -13,11 +22,18 @@ const AppContainer = () => {
     const [dataByCountry, setDataByCountry] = useState([]);
     const [filteredText, setFilteredText] = useState('');
     const [refreshTime, setRefreshTime] = useState(DEFAULT_TIMER);
+    const [importantItem, setImportantItem] = useState(Object.assign(defaultImportantItem));
     const timeoutId = useRef(null);
 
     const getData = () => {
         axios.get(API_DATA_OVERVIEW_URL).then(response => {
             setOverviewData(response.data);
+        })
+
+        const apiByCountry = API_DATA_BYCOUNTRY_URL + '/' + defaultImportantItem.country;
+        axios.get(apiByCountry).then(response => {
+            const { cases, totalCases, deaths, todayDeaths, recovered } = response.data;
+            setImportantItem(Object.assign({}, importantItem, { cases, totalCases, deaths, todayDeaths, recovered }));
         })
 
         axios.get(API_DATA_BYCOUNTRY_URL)
@@ -59,7 +75,7 @@ const AppContainer = () => {
 
     return (
         <div>
-            <Overview overviewData={overviewData} onChangeTimer={handleChangeTimer} selectedTime={refreshTime} />
+            <Overview overviewData={overviewData} importantItem={importantItem} onChangeTimer={handleChangeTimer} selectedTime={refreshTime} />
             <Filter onSearchChange={handleChangeSearch} />
             <CaseByCountryList dataByCountry={displayDataList} />
         </div>

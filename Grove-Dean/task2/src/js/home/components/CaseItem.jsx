@@ -7,11 +7,14 @@ import { LanguageContext } from '../../utils/context';
 
 const CaseItem = (props) => {
     const { item } = props;
+    const { countryInfo } = item;
     const langKey = useContext(LanguageContext);
+
+    const countryName = getText(langKey, item.country) || item.country;
 
     return (
         <Card key={item.country}>
-            <CardHeader><img className="mr-2" alt={item.countryInfo.iso2} src={item.countryInfo.flag} with="30" height="20" />{item.country}</CardHeader>
+            <CardHeader><img className="mr-2" alt={countryInfo && countryInfo.iso2} src={countryInfo && countryInfo.flag} with="30" height="20" />{countryName}</CardHeader>
             <CardBody>
                 <CardText>{getText(langKey, 'totalCases')}: {formatNumber(item.cases)}</CardText>
                 <CardText>{getText(langKey, 'todayCases').replace('{0}', new Date().toLocaleDateString())}: {formatNumber(item.todayCases)}</CardText>

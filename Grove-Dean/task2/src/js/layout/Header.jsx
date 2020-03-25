@@ -13,9 +13,9 @@ const Header = (props) => {
 
   return (
     <div>
-      <Navbar color="secondary" light expand="md">
+      <Navbar color="secondary" light>
         <NavbarBrand className="text-white" href="/">Covid-19</NavbarBrand>
-        <Nav className="mr-auto" navbar>
+        <Nav className="mr-auto">
           <Dropdown nav inNavbar isOpen={dropdownOpen} toggle={toggle}>
             <DropdownToggle nav caret className="text-white">
               <span className="pr-2">{getText(selectedLanguage, 'language')}</span>
