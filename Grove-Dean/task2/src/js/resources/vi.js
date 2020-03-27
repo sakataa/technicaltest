@@ -10,10 +10,11 @@
     'deaths': 'Tử Vong',
     'SearchByCountry': 'Tìm kiếm theo quốc gia',
     'totalCases': 'Tổng số ca',
-    'todayCases': 'Số ca nhiễm hôm nay ({0})',
+    'todayCases': 'Số ca nhiễm hôm nay',
     'todayDeaths': 'Số ca tử vong hôm nay',
     'recovered': 'Phục hồi',
     'Viet Nam': 'Việt Nam',
-    'global': 'Toàn Cầu'
+    'global': 'Toàn Cầu',
+    'timeInfo': 'Dữ liệu dựa trên múi giờ UTC, Cập nhật lúc'
 }
 })(window._lang = window._lang || {})

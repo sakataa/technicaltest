@@ -23,11 +23,14 @@ const AppContainer = () => {
     const [filteredText, setFilteredText] = useState('');
     const [refreshTime, setRefreshTime] = useState(DEFAULT_TIMER);
     const [importantItem, setImportantItem] = useState(Object.assign(defaultImportantItem));
+    const [lastUpdatedTime, setLastUpdatedTime] = useState(new Date());
+
     const timeoutId = useRef(null);
 
     const getData = () => {
         axios.get(API_DATA_OVERVIEW_URL).then(response => {
             setOverviewData(response.data);
+            setLastUpdatedTime(new Date());
         })
 
         const apiByCountry = API_DATA_BYCOUNTRY_URL + '/' + encodeURIComponent(importantItem.country);
@@ -36,7 +39,7 @@ const AppContainer = () => {
             setImportantItem(Object.assign({}, importantItem, { cases, todayCases, deaths, todayDeaths, recovered }));
         })
 
-        axios.get(API_DATA_BYCOUNTRY_URL)
+        axios.get(API_DATA_BYCOUNTRY_URL + '?sort=cases')
             .then(response => {
                 const myFavoriteCountry = response.data.find(x => x.countryInfo && x.countryInfo.iso2 === importantItem.countryInfo.iso2);
                 if(myFavoriteCountry && myFavoriteCountry.country !== importantItem.country){
@@ -79,7 +82,11 @@ const AppContainer = () => {
 
     return (
         <div>
-            <Overview overviewData={overviewData} importantItem={importantItem} onChangeTimer={handleChangeTimer} selectedTime={refreshTime} />
+            <Overview overviewData={overviewData} 
+                importantItem={importantItem} 
+                onChangeTimer={handleChangeTimer} 
+                selectedTime={refreshTime}
+                lastUpdatedTime={lastUpdatedTime} />
             <Filter onSearchChange={handleChangeSearch} />
             <CaseByCountryList dataByCountry={displayDataList} />
         </div>

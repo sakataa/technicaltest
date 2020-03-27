@@ -17,7 +17,7 @@ const CaseItem = (props) => {
             <CardHeader><img className="mr-2" alt={countryInfo && countryInfo.iso2} src={countryInfo && countryInfo.flag} with="30" height="20" />{countryName}</CardHeader>
             <CardBody>
                 <CardText>{getText(langKey, 'totalCases')}: {formatNumber(item.cases)}</CardText>
-                <CardText>{getText(langKey, 'todayCases').replace('{0}', new Date().toLocaleDateString())}: {formatNumber(item.todayCases)}</CardText>
+                <CardText>{getText(langKey, 'todayCases')}: {formatNumber(item.todayCases)}</CardText>
                 <CardText>{getText(langKey, 'deaths')}: {formatNumber(item.deaths)}</CardText>
                 <CardText>{getText(langKey, 'todayDeaths')}: {formatNumber(item.todayDeaths)}</CardText>
                 <CardText>{getText(langKey, 'recovered')}: {formatNumber(item.recovered)}</CardText>

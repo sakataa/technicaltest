@@ -10,10 +10,11 @@
         'deaths': 'Deaths',
         'SearchByCountry': 'Search By Country',
         'totalCases': 'Total Cases',
-        'todayCases': 'Today ({0}) cases',
+        'todayCases': 'Today Cases',
         'todayDeaths': 'Today Deaths',
         'recovered': 'Recovered',
         'Viet Nam': 'Viet Nam',
-        'global': 'Global'
+        'global': 'Global',
+        'timeInfo': 'Data was based on UTC time zone, Last updated on'
     }
 })(window._lang = window._lang || {})

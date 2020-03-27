@@ -8,13 +8,18 @@ import { LanguageContext } from '../../utils/context';
 import CaseItem from '../components/CaseItem';
 
 const Overview = (props) => {
-    const { overviewData, selectedTime, onChangeTimer, importantItem } = props;
+    const { overviewData, selectedTime, onChangeTimer, importantItem, lastUpdatedTime } = props;
     const langKey = useContext(LanguageContext);
+
+    const updatedTime = lastUpdatedTime || new Date();
 
     return (
         <div className="my-3">
             <Jumbotron fluid className="py-3">
                 <h5 className="text-center">{getText(langKey, 'pageHeading')}</h5>
+                <p className="text-center lead">
+                    <small>{getText(langKey, 'timeInfo')}: {updatedTime.toUTCString()}</small>
+                </p>
                 <TimeSelection selectedTime={selectedTime} onChangeTimer={onChangeTimer} />
 
                 <Container fluid>
