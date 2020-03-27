@@ -13,7 +13,7 @@
     'todayCases': 'Số ca nhiễm hôm nay ({0})',
     'todayDeaths': 'Số ca tử vong hôm nay',
     'recovered': 'Phục hồi',
-    'Vietnam': 'Việt Nam',
-    'world': 'Thế giới'
+    'Viet Nam': 'Việt Nam',
+    'global': 'Toàn Cầu'
 }
 })(window._lang = window._lang || {})

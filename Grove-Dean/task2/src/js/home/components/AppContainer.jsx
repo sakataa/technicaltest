@@ -7,7 +7,7 @@ import axios from 'axios';
 const API_DATA_OVERVIEW_URL = 'https://corona.lmao.ninja/all';
 const API_DATA_BYCOUNTRY_URL = 'https://corona.lmao.ninja/countries';
 const defaultImportantItem = {
-    country: 'Vietnam',
+    country: 'Viet Nam',
     countryInfo: {iso2: 'VN', flag: 'https://raw.githubusercontent.com/NovelCOVID/API/master/assets/flags/vn.png'},
     cases: 0,
     todayCases: 0,
@@ -30,7 +30,7 @@ const AppContainer = () => {
             setOverviewData(response.data);
         })
 
-        const apiByCountry = API_DATA_BYCOUNTRY_URL + '/' + defaultImportantItem.country;
+        const apiByCountry = API_DATA_BYCOUNTRY_URL + '/' + encodeURIComponent(importantItem.country);
         axios.get(apiByCountry).then(response => {
             const { cases, todayCases, deaths, todayDeaths, recovered } = response.data;
             setImportantItem(Object.assign({}, importantItem, { cases, todayCases, deaths, todayDeaths, recovered }));
@@ -38,6 +38,10 @@ const AppContainer = () => {
 
         axios.get(API_DATA_BYCOUNTRY_URL)
             .then(response => {
+                const myFavoriteCountry = response.data.find(x => x.countryInfo && x.countryInfo.iso2 === importantItem.countryInfo.iso2);
+                if(myFavoriteCountry && myFavoriteCountry.country !== importantItem.country){
+                    setImportantItem(Object.assign({}, importantItem, myFavoriteCountry))
+                }
                 setDataByCountry(response.data);
             });
     }

@@ -19,9 +19,9 @@ const Overview = (props) => {
 
                 <Container fluid>
                     <Row>
-                        <Col md={6} className="mb-4">
+                        <Col md={6} className="mb-4 mb-md-0">
                             <Card>
-                                <CardHeader>{getText(langKey, 'world')}</CardHeader>
+                                <CardHeader>{getText(langKey, 'global')}</CardHeader>
                                 <CardBody className="text-center">
                                     <Alert color="primary">
                                         {getText(langKey, 'coronavirusCases')}: {overviewData && formatNumber(overviewData.cases)}
@@ -36,7 +36,7 @@ const Overview = (props) => {
                             </Card>
                         </Col>
 
-                        <Col md={6} className="mb-4">
+                        <Col md={6} className="mb-4 mb-md-0">
                             <CaseItem item={importantItem} />
                         </Col>
                     </Row>

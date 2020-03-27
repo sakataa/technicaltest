@@ -13,7 +13,7 @@
         'todayCases': 'Today ({0}) cases',
         'todayDeaths': 'Today Deaths',
         'recovered': 'Recovered',
-        'Vietnam': 'Vietnam',
-        'world': 'World'
+        'Viet Nam': 'Viet Nam',
+        'global': 'Global'
     }
 })(window._lang = window._lang || {})

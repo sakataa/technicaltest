@@ -50,7 +50,8 @@ module.exports = env => {
           {
             inject: true,
             template: './index.html',
-            filename: 'index.html'
+            filename: 'index.html',
+            favicon: './favicon.ico'
           },
           isPro
             ? {
@@ -70,7 +71,8 @@ module.exports = env => {
             : undefined
         )
       ),
-    ].concat(isPro ? [new CleanWebpackPlugin(cleanOptions)] : [new CleanWebpackPlugin(cleanOptions)]),
+      new CleanWebpackPlugin(cleanOptions)
+    ],
     optimization: {
       splitChunks: {
         chunks: 'all',
