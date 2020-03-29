@@ -7,13 +7,15 @@ import axios from 'axios';
 const API_DATA_OVERVIEW_URL = 'https://corona.lmao.ninja/all';
 const API_DATA_BYCOUNTRY_URL = 'https://corona.lmao.ninja/countries';
 const defaultImportantItem = {
-    country: 'Viet Nam',
+    country: 'Vietnam',
     countryInfo: {iso2: 'VN', flag: 'https://raw.githubusercontent.com/NovelCOVID/API/master/assets/flags/vn.png'},
     cases: 0,
     todayCases: 0,
     deaths: 0,
     todayDeaths: 0,
-    recovered: 0
+    recovered: 0,
+    active: 0,
+    critical: 0
 }
 const DEFAULT_TIMER = 20;
 
@@ -25,25 +27,28 @@ const AppContainer = () => {
     const [importantItem, setImportantItem] = useState(Object.assign(defaultImportantItem));
     const [lastUpdatedTime, setLastUpdatedTime] = useState(new Date());
 
+    const countryRef = useRef(importantItem.country);
+
     const timeoutId = useRef(null);
 
     const getData = () => {
         axios.get(API_DATA_OVERVIEW_URL).then(response => {
             setOverviewData(response.data);
-            setLastUpdatedTime(new Date());
+            setLastUpdatedTime(new Date(response.data.updated));
         })
 
-        const apiByCountry = API_DATA_BYCOUNTRY_URL + '/' + encodeURIComponent(importantItem.country);
+        const apiByCountry = API_DATA_BYCOUNTRY_URL + '/' + encodeURIComponent(countryRef.current);
         axios.get(apiByCountry).then(response => {
-            const { cases, todayCases, deaths, todayDeaths, recovered } = response.data;
-            setImportantItem(Object.assign({}, importantItem, { cases, todayCases, deaths, todayDeaths, recovered }));
+            const { cases, todayCases, deaths, todayDeaths, recovered, active, critical } = response.data;
+            setImportantItem(Object.assign({}, importantItem, { cases, todayCases, deaths, todayDeaths, recovered, active, critical }));
         })
 
         axios.get(API_DATA_BYCOUNTRY_URL + '?sort=cases')
             .then(response => {
                 const myFavoriteCountry = response.data.find(x => x.countryInfo && x.countryInfo.iso2 === importantItem.countryInfo.iso2);
-                if(myFavoriteCountry && myFavoriteCountry.country !== importantItem.country){
-                    setImportantItem(Object.assign({}, importantItem, myFavoriteCountry))
+                if(myFavoriteCountry && myFavoriteCountry.country !== countryRef.current){
+                    countryRef.current = myFavoriteCountry.country;
+                    setImportantItem(Object.assign({}, importantItem, myFavoriteCountry));
                 }
                 setDataByCountry(response.data);
             });

@@ -13,8 +13,10 @@
         'todayCases': 'Today Cases',
         'todayDeaths': 'Today Deaths',
         'recovered': 'Recovered',
-        'Viet Nam': 'Viet Nam',
+        'Vietnam': 'Viet Nam',
         'global': 'Global',
-        'timeInfo': 'Data was based on UTC time zone, Last updated on'
+        'timeInfo': 'Data was based on UTC time zone, Last updated on',
+        'active': 'Active',
+        'critical': 'Critical'
     }
 })(window._lang = window._lang || {})

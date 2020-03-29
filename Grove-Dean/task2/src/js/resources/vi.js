@@ -13,8 +13,10 @@
     'todayCases': 'Số ca nhiễm hôm nay',
     'todayDeaths': 'Số ca tử vong hôm nay',
     'recovered': 'Phục hồi',
-    'Viet Nam': 'Việt Nam',
+    'Vietnam': 'Việt Nam',
     'global': 'Toàn Cầu',
-    'timeInfo': 'Dữ liệu dựa trên múi giờ UTC, Cập nhật lúc'
+    'timeInfo': 'Dữ liệu dựa trên múi giờ UTC, Cập nhật lúc',
+    'active': 'Số ca đang điều trị',
+    'critical': 'Số ca bệnh nặng'
 }
 })(window._lang = window._lang || {})

@@ -21,6 +21,8 @@ const CaseItem = (props) => {
                 <CardText>{getText(langKey, 'deaths')}: {formatNumber(item.deaths)}</CardText>
                 <CardText>{getText(langKey, 'todayDeaths')}: {formatNumber(item.todayDeaths)}</CardText>
                 <CardText>{getText(langKey, 'recovered')}: {formatNumber(item.recovered)}</CardText>
+                <CardText>{getText(langKey, 'active')}: {formatNumber(item.active)}</CardText>
+                <CardText>{getText(langKey, 'critical')}: {formatNumber(item.critical)}</CardText>
             </CardBody>
         </Card>
     )
