@@ -4,6 +4,6 @@ namespace RobotSimulation.Console.Interfaces
 {
     public interface ICommandFactory
     {
-        ICommand? GetCommand(CommandType type);
+        ICommand GetCommand(CommandType type);
     }
 }

@@ -1,4 +1,5 @@
-﻿using RobotSimulation.Console.Extensions;
+﻿using RobotSimulation.Console.Constants;
+using RobotSimulation.Console.Extensions;
 using RobotSimulation.Console.Interfaces;
 using RobotSimulation.Console.Models;
 
@@ -65,14 +66,16 @@ namespace RobotSimulation.Console.Validators
                     return errorMessages;
                 }
 
-                if (!int.TryParse(x, out int xPoint) || xPoint < 0 || xPoint > 5)
+                int maxWidthIndex = AppConstants.TableWidth - 1;
+                if (!int.TryParse(x, out int xPoint) || xPoint < 0 || xPoint > maxWidthIndex)
                 {
                     errorMessages.Add("Position X value must be a number and between 0 and 4");
 
                     return errorMessages;
                 }
 
-                if (!int.TryParse(y, out int yPoint) || yPoint < 0 || yPoint > 5)
+                int maxYIndex = AppConstants.TableHeight - 1;
+                if (!int.TryParse(y, out int yPoint) || yPoint < 0 || yPoint > maxYIndex)
                 {
                     errorMessages.Add("Position Y value must be a number and between 0 and 4");
 

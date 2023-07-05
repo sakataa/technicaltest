@@ -5,7 +5,7 @@ namespace RobotSimulation.Console.Commands
 {
     internal class CommandFactory : ICommandFactory
     {
-        public ICommand? GetCommand(CommandType type)
+        public ICommand GetCommand(CommandType type)
         {
             return type switch
             {
@@ -13,7 +13,7 @@ namespace RobotSimulation.Console.Commands
                 CommandType.Move => new MoveCommand(),
                 CommandType.Left => new LeftCommand(),
                 CommandType.Right => new RightCommand(),
-                _ => null
+                _ => throw new ArgumentException(nameof(type)),
             };
         }
     }
