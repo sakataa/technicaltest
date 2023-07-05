@@ -23,5 +23,25 @@ namespace RobotSimulation.Console.Utilities
 
             return new CommandArgument(commandType);
         }
+
+        public static IEnumerable<CommandArgument> FromFile(string filePath)
+        {
+            List<CommandArgument> result = new();
+
+            string baseDirectory = AppContext.BaseDirectory;
+            string fullFilePath = Path.Combine(baseDirectory, filePath);
+
+            if (!File.Exists(fullFilePath))
+            {
+                return result;
+            }
+
+            foreach (string line in File.ReadLines(fullFilePath))
+            {
+                result.Add(FromCommandLineInput(line));
+            }
+
+            return result;
+        }
     }
 }

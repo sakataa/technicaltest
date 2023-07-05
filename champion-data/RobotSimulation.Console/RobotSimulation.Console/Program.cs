@@ -6,6 +6,8 @@ using RobotSimulation.Console.Validators;
 
 ServiceCollection serviceCollection = new();
 serviceCollection.AddTransient<ICommandArgumentsValidator, CommandArgumentsValidator>();
+serviceCollection.AddTransient<IPlaceCommandValidator, PlaceCommandValidator>();
+
 serviceCollection.AddScoped<ICommandFactory, CommandFactory>();
 
 ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
