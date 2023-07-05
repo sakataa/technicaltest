@@ -25,9 +25,9 @@ namespace RobotSimulation.Console
 
             Location? robotLocation = null;
 
-            foreach (string enteredCommand in File.ReadLines(fullFilePath))
+            foreach (string commandLine in File.ReadLines(fullFilePath).Where(line => !string.IsNullOrWhiteSpace(line)))
             {
-                OperationResult result = _robotMovementService.Move(enteredCommand, robotLocation);
+                OperationResult result = _robotMovementService.Move(commandLine, robotLocation);
 
                 if (!result.IsSuccessful && result.ShouldStopProcessing)
                 {

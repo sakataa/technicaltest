@@ -45,7 +45,7 @@ public class RobotMovementService : IRobotMovementService
             };
         }
 
-        CommandArgument commandArgument = CommandArgumentParser.FromCommandLineInput(commandLine);
+        CommandArgument commandArgument = CommandArgumentParser.FromCommandLine(commandLine);
 
         if (commandArgument.CommandType == CommandType.Report && currentLocation is not null)
         {

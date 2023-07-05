@@ -37,16 +37,23 @@ namespace RobotSimulation.Console
                 }
             }
 
-            IRobotMovementService robotMovementService = _serviceProvider.GetRequiredService<IRobotMovementService>();
-
-            IRunner runner = selectedMode switch
+            try
             {
-                InputMode.CommandLine => new CommandLineModeRunner(robotMovementService),
-                InputMode.File => new FileModeRunner(robotMovementService),
-                _ => throw new InvalidOperationException("Invalid run mode")
-            };
+                IRobotMovementService robotMovementService = _serviceProvider.GetRequiredService<IRobotMovementService>();
 
-            runner.Run();
+                IRunner runner = selectedMode switch
+                {
+                    InputMode.CommandLine => new CommandLineModeRunner(robotMovementService),
+                    InputMode.File => new FileModeRunner(robotMovementService),
+                    _ => throw new InvalidOperationException("Invalid run mode")
+                };
+
+                runner.Run();
+            }
+            catch
+            {
+                System.Console.WriteLine("Oops, something went wrong. Please try again or contact the author ^_^");
+            }
 
             System.Console.WriteLine("Press any key to exit...");
             System.Console.ReadKey(true);
