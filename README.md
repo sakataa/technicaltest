@@ -4,6 +4,7 @@
 ## Overview
 - Written by C# language with .NET 6. The type of application is console.
 - The application support 2 modes from input commands. Enter **1** for command line mode and **2** for reading file mode.
+- The input values are case insensitive. That means you can enter place or PLACE, north or NORTH, those are all valid.
 - I also build a release package and copied all files to the **app-run** directory in the root of repository, so you can go inside it, open up the `.exe` file to play or modify the data test in the `TestFiles/commands.txt`
 - If you open with Visual Studio or Visual Studio Code The path of file test is `TestFiles/commands.txt`. We need to **re-build** the project if we have any modification for that file.
 - The project is simple, so just open visual studio and press F5. Or you can use the dotnet CLI. Note: make sure you are in directory of the root repository
