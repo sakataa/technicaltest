@@ -2,6 +2,6 @@
 {
     public interface IPlaceCommandValidator
     {
-        IEnumerable<string> Validate(string commandArguments);
+        IEnumerable<string> Validate(IEnumerable<string> commandArguments);
     }
 }

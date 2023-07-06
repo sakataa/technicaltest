@@ -1,6 +1,7 @@
 ﻿using RobotSimulation.Console.Extensions;
 using RobotSimulation.Console.Interfaces;
 using RobotSimulation.Console.Models;
+using RobotSimulation.Console.Utilities;
 
 namespace RobotSimulation.Console.Validators
 {
@@ -13,24 +14,26 @@ namespace RobotSimulation.Console.Validators
             _placeCommandValidator = placeCommandValidator;
         }
 
-        public IEnumerable<string> Validate(string commandArg)
+        public IEnumerable<string> Validate(string commandLine)
         {
+            commandLine = commandLine.Trim();
             List<string> errorMessages = new();
 
-            if (string.IsNullOrEmpty(commandArg))
+            if (string.IsNullOrEmpty(commandLine))
             {
                 errorMessages.Add("Command is required");
 
                 return errorMessages;
             }
 
-            string[] splittedCommand = commandArg.Split(" ");
-            string commandName = splittedCommand[0].ToUpperInvariant();
+            (string CommandName, IEnumerable<string> Arguments) = CommandArgumentParser.ToCommandNameAndArguments(commandLine);
 
-            List<CommandType> validCommands = Enum.GetValues(typeof(CommandType)).Cast<CommandType>().ToList();
+            List<string> validCommandNamesString = Enum.GetValues(typeof(CommandType))
+                .Cast<CommandType>()
+                .Select(x => x.ToString().ToUpperInvariant())
+                .ToList();
 
-            IEnumerable<string> validCommandNamesString = validCommands.Select(x => x.ToString().ToUpperInvariant());
-            bool isValidCommand = validCommandNamesString.Contains(commandName);
+            bool isValidCommand = validCommandNamesString.Contains(CommandName);
 
             if (!isValidCommand)
             {
@@ -41,11 +44,9 @@ namespace RobotSimulation.Console.Validators
                 return errorMessages;
             }
 
-            if (commandName.Match(CommandType.Place.ToString()))
+            if (CommandName.Match(CommandType.Place.ToString()))
             {
-                string commandArguments = splittedCommand.Length > 1 ? splittedCommand[1] : string.Empty;
-
-                IEnumerable<string> placeCommandValidationMessage = _placeCommandValidator.Validate(commandArguments);
+                IEnumerable<string> placeCommandValidationMessage = _placeCommandValidator.Validate(Arguments);
                 errorMessages.AddRange(placeCommandValidationMessage);
             }
 

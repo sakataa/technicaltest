@@ -21,7 +21,7 @@ namespace RobotSimulation.Console
                 string promptMessage = robotLocation is null ? "Please enter the PLACE command first:" : "Please enter your next command:";
                 System.Console.WriteLine(promptMessage);
 
-                string commandLine = System.Console.ReadLine() ?? string.Empty;
+                string commandLine = System.Console.ReadLine()?.Trim() ?? string.Empty;
 
                 OperationResult result = _robotMovementService.Move(commandLine, robotLocation);
 

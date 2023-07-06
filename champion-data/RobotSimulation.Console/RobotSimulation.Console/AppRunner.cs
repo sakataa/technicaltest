@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using RobotSimulation.Console.Interfaces;
 using RobotSimulation.Console.Models;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace RobotSimulation.Console
@@ -8,6 +9,7 @@ namespace RobotSimulation.Console
     public class AppRunner
     {
         private readonly IServiceProvider _serviceProvider;
+        private readonly ReadOnlyCollection<string> _validInputModes = new List<string> { "1", "2" }.AsReadOnly();
 
         public AppRunner(IServiceProvider serviceProvider)
         {
@@ -28,12 +30,12 @@ namespace RobotSimulation.Console
                 System.Console.WriteLine("1.Command line");
                 System.Console.WriteLine("2.File");
 
-                string selectedModeFromCli = System.Console.ReadLine() ?? string.Empty;
+                string selectedModeFromCli = System.Console.ReadLine()?.Trim() ?? string.Empty;
 
-                if (Enum.TryParse(selectedModeFromCli, true, out InputMode mode))
+                if (_validInputModes.Contains(selectedModeFromCli))
                 {
                     isValidMode = true;
-                    selectedMode = mode;
+                    selectedMode = Enum.Parse<InputMode>(selectedModeFromCli, true);
                 }
             }
 

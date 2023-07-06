@@ -23,6 +23,7 @@ public class RobotMovementService : IRobotMovementService
 
     public OperationResult Move(string commandLine, Location? currentLocation)
     {
+        commandLine = commandLine.Trim();
         if (currentLocation is null)
         {
             OperationResult firstCommandValidationResult = ValidateFirstCommand(commandLine);
@@ -81,28 +82,33 @@ public class RobotMovementService : IRobotMovementService
 
     private OperationResult ValidateFirstCommand(string commandLine)
     {
-        string[] commandNameAndArguments = commandLine.Split(" ");
-        bool isPlaceCommand = commandNameAndArguments[0].Match(CommandType.Place.ToString());
+        commandLine = commandLine.Trim();
 
-        if (isPlaceCommand)
+        var defaultResult = new OperationResult
         {
-            string commandArguments = commandNameAndArguments.Length > 1 ? commandNameAndArguments[1] : string.Empty;
-            IEnumerable<string> placeCommandValidationMessages = _placeCommandValidator.Validate(commandArguments);
+            ErrorMessage = "The first valid command to the robot is a PLACE command",
+            ShouldStopProcessing = true
+        };
 
-            if (placeCommandValidationMessages.Any())
-            {
-                return new OperationResult
-                {
-                    ErrorMessage = placeCommandValidationMessages.First(),
-                    ShouldStopProcessing = true
-                };
-            }
+        if (string.IsNullOrWhiteSpace(commandLine))
+        {
+            return defaultResult;
         }
-        else
+
+        (string CommandName, IEnumerable<string> Arguments) = CommandArgumentParser.ToCommandNameAndArguments(commandLine);
+
+        if (!CommandName.Match(CommandType.Place.ToString()))
+        {
+            return defaultResult;
+        }
+
+        IEnumerable<string> placeCommandValidationMessages = _placeCommandValidator.Validate(Arguments);
+
+        if (placeCommandValidationMessages.Any())
         {
             return new OperationResult
             {
-                ErrorMessage = "The first valid command to the robot is a PLACE command",
+                ErrorMessage = placeCommandValidationMessages.First(),
                 ShouldStopProcessing = true
             };
         }

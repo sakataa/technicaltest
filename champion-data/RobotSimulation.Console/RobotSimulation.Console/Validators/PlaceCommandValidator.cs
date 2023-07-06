@@ -6,26 +6,19 @@ namespace RobotSimulation.Console.Validators
 {
     public class PlaceCommandValidator : IPlaceCommandValidator
     {
-        public IEnumerable<string> Validate(string commandArguments)
+        public IEnumerable<string> Validate(IEnumerable<string> commandArguments)
         {
             List<string> errorMessages = new();
 
-            string placeCommandErrorMessage = $"PLACE command must contain position X,Y and facing NORTH, SOUTH, EAST or WEST. E.g PLACE 0,0,NORTH";
-
-            if (string.IsNullOrWhiteSpace(commandArguments))
+            if (!commandArguments.Any() || commandArguments.Count() != 3)
             {
+                string placeCommandErrorMessage = $"PLACE command must contain position X,Y and facing NORTH, SOUTH, EAST or WEST. E.g PLACE 0,0,NORTH";
                 errorMessages.Add(placeCommandErrorMessage);
 
                 return errorMessages;
             }
-            var splittedValues = commandArguments.Split(",");
 
-            if (splittedValues.Length != 3)
-            {
-                errorMessages.Add(placeCommandErrorMessage);
-
-                return errorMessages;
-            }
+            string[] splittedValues = commandArguments.Select(x => x.Trim()).ToArray();
 
             string x = splittedValues[0];
             string y = splittedValues[1];
@@ -34,6 +27,7 @@ namespace RobotSimulation.Console.Validators
             IEnumerable<string> validFacingTypes = Enum.GetValues(typeof(FacingType)).Cast<FacingType>()
                 .Select(x => x.ToString().ToUpperInvariant())
                 .ToList();
+
             if (!validFacingTypes.Contains(f))
             {
                 errorMessages.Add("Facing values must be in NORTH, SOUTH, EAST or WEST");
